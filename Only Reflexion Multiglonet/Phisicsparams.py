@@ -83,6 +83,7 @@ class PhysicsParams:
                 theta_radians = getattr(self, f"theta_{i}") * math.pi / 180
                 setattr(self, f"theta_{i}", torch.tensor([theta_radians]))
 
+    def view_attributes(self):
         for attr, value in self.__dict__.items():
             if attr != "condiciones":
                 print(f"{attr}: {value}")
