@@ -59,7 +59,7 @@ class GLOnet():
         self.refractive_indices_training = []
         self.thicknesses_training = []
         
-    def train(self):
+    def train(self, show_update = True):
         self.generator.train()
             
         with tqdm(total=self.numIter) as t:
@@ -80,7 +80,8 @@ class GLOnet():
                 g_loss.backward()
                 self.optimizer.step()
                 self.scheduler.step()
-                t.update()
+                if show_update:
+                    t.update()
  
     def evaluate(self, num_devices, kvector = None, inc_angles = None, grayscale=True):
         if kvector is None:
