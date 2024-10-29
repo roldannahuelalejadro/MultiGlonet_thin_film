@@ -89,16 +89,8 @@ class GLOnet():
         if inc_angles is None:
             inc_angles = self.theta
 
-        self.generator.eval()
-        z = self.sample_z(num_devices)
-        thicknesses, refractive_indices, P = self.generator(z, self.alpha)
-        result_mat = torch.argmax(P, dim=2).detach() # batch size x number of layer
-
-        if not grayscale:
-            if self.user_define:
-                n_database = self.n_database # do not support dispersion
-            else:
-                n_database = self.matdatabase.interp_wv(2 * math.pi/kvector, self.materials, True).unsqueeze(0).unsqueeze(0).type(self.dtype)
+            self.generator.eval()
+            n_database = self.matdatabase.interp_wv(2 * math.pi/kvector, self.materials, True).unsqueeze(0).unsqueeze(0).type(self.dtype)
             
             one_hot = torch.eye(len(self.materials)).type(self.dtype)
             ref_idx = torch.sum(one_hot[result_mat].unsqueeze(-1) * n_database, dim=2)

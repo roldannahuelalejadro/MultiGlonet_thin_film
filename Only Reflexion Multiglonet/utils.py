@@ -282,26 +282,4 @@ def plot_envolution(imgs_prev, effs_prev, grads_prev, imgs, effs, Iter, fig_path
 
 
 
-def movie_scatter(imgs, effs, output_dir):
-
-    FFMpegWriter = animation.writers['ffmpeg']
-    metadata = dict(title='scatter', artist='Matplotlib',
-                    comment='Movie support!')
-    writer = FFMpegWriter(fps=5, metadata=metadata)
-
-    fig = plt.figure()
-    numFrame = imgs.shape[0]
-    filepath = output_dir + '/scatter.avi'
-
-    with writer.saving(fig, filepath, numFrame):
-        for i in range(numFrame):
-            plt.cla()
-            plt.scatter(imgs[i, :, 0], imgs[i, :, 1], c = effs[i, :], cmap=plt.cm.plasma)
-            plt.title('Iter {}'.format(i*100+100))
-            plt.xlim(-15, 15)
-            plt.ylim(-15, 15)
-            plt.colorbar()
-            plt.clim(0, 1)
-            writer.grab_frame()
-
 
